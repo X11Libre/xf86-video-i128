@@ -1,4 +1,4 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/i128/i128.h,v 1.6 2001/05/04 19:05:39 dawes Exp $ */
+/* $XFree86$ */
 /*
  * Number Nine I128 functions
  *

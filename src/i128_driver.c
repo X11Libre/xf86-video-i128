@@ -22,7 +22,7 @@
  *
  */
 
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/i128/i128_driver.c,v 1.35 2003/11/06 18:38:03 tsi Exp $ */
+/* $XFree86$ */
 
 
 /* All drivers should typically include these */
