@@ -1,13 +1,12 @@
-<!DOCTYPE linuxdoc PUBLIC "-//XFree86//DTD linuxdoc//EN"[
+<!DOCTYPE linuxdoc PUBLIC "-//Xorg//DTD linuxdoc//EN"[
 <!ENTITY % defs SYSTEM "defs.ent"> %defs;
 ]>
 
 <article>
 <title>Information for Number Nine I128 Users
 <author>The XFree86 Project Inc.
-<date>3 November 2000
+<date>25 March 2004
 <ident>
-$XFree86: xc/programs/Xserver/hw/xfree86/doc/sgml/I128.sgml,v 1.6 2000/12/13 01:55:47 robin Exp $
 </ident>
 
 <toc>
@@ -45,7 +44,7 @@ supported.
 <p>
 The I128 driver should auto-detect all supported hardware so you needn't 
 have anything other than the Identifier in the Section "Device" of the
-XF86Config file.  When running the XF86Setup or xf86config programs one    
+xorg.conf file.  When running the xorgcfg or xorgconfig programs one    
 merely needs to select an I128 card so that the correct server will be  
 used.  One need not and should not specify a RAMDAC, clockchip or allow 
 the setup program to probe for clocks. The driver will auto-detect the   
