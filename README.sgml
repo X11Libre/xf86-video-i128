@@ -5,10 +5,10 @@
 <article>
 <title>Information for Number Nine I128 Users
 <author>The XFree86 Project Inc.
-<and>Updated for X.org's X11R&relvers; by Jim Gettys
 <date>25 March 2004
 <ident>
-$XFree86: xc/programs/Xserver/hw/xfree86/doc/sgml/I128.sgml,v 1.5 2000/11/06 22:03:28 dawes Exp $
+$Id$
+Based on $XFree86: xc/programs/Xserver/hw/xfree86/doc/sgml/I128.sgml,v 1.5 2000/11/06 22:03:28 dawes Exp $
 </ident>
 
 <toc>
