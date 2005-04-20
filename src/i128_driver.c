@@ -60,7 +60,7 @@
 #include "fb.h"
 
 #include "xf86xv.h"
-#include "Xv.h"
+#include <X11/extensions/Xv.h>
 
 /* driver specific includes */
 #include "i128.h"
