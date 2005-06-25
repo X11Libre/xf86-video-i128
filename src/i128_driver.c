@@ -121,7 +121,7 @@ static unsigned int I128DDC1Read(ScrnInfoPtr pScrn);
  * this DriverRec be an upper-case version of the driver name.
  */
 
-DriverRec I128 = {
+_X_EXPORT DriverRec I128 = {
     I128_VERSION,
     I128_DRIVER_NAME,
     I128Identify,
@@ -157,7 +157,7 @@ static XF86ModuleVersionInfo i128VersRec =
  * ModuleSetupProc() and ModuleTearDownProc() functions.
  */
 
-XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
+_X_EXPORT XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
 
 #endif
 
