@@ -39,12 +39,13 @@
 #include "IBMRGB.h"
 
 
-void I128IBMShowCursor(ScrnInfoPtr pScrn);
-void I128IBMHideCursor(ScrnInfoPtr pScrn);
-void I128IBMSetCursorPosition(ScrnInfoPtr pScrn, int x, int y);
-void I128IBMSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg);
-void I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src);
-unsigned char *I128IBMRealizeCursor(xf86CursorInfoPtr infoPtr, CursorPtr pCurs);
+static void I128IBMShowCursor(ScrnInfoPtr pScrn);
+static void I128IBMHideCursor(ScrnInfoPtr pScrn);
+static void I128IBMSetCursorPosition(ScrnInfoPtr pScrn, int x, int y);
+static void I128IBMSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg);
+static void I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src);
+static unsigned char *I128IBMRealizeCursor(xf86CursorInfoPtr infoPtr,
+        CursorPtr pCurs);
 static Bool I128IBMUseHWCursor(ScreenPtr pScrn, CursorPtr pCurs);
 
 
@@ -96,7 +97,7 @@ I128IBMHWCursorInit(ScrnInfoPtr pScrn)
  *                                   (plane 0) maps to cursor colors 0 and 1
  */
 
-unsigned char *
+static unsigned char *
 I128IBMRealizeCursor(xf86CursorInfoPtr infoPtr, CursorPtr pCurs)
 {
    register int i, j;
@@ -156,7 +157,7 @@ I128IBMRealizeCursor(xf86CursorInfoPtr infoPtr, CursorPtr pCurs)
 }
 
 
-void 
+static void 
 I128IBMShowCursor(ScrnInfoPtr pScrn)
 {
    CARD32 tmpl, tmph;
@@ -176,7 +177,7 @@ I128IBMShowCursor(ScrnInfoPtr pScrn)
    return;
 }
 
-void
+static void
 I128IBMHideCursor(ScrnInfoPtr pScrn)
 {
    CARD32 tmpl, tmph, tmp1;
@@ -196,7 +197,7 @@ I128IBMHideCursor(ScrnInfoPtr pScrn)
    return;
 }
 
-void
+static void
 I128IBMSetCursorPosition(ScrnInfoPtr pScrn, int x, int y)
 {
    CARD32 tmpl, tmph;
@@ -228,7 +229,7 @@ I128IBMSetCursorPosition(ScrnInfoPtr pScrn, int x, int y)
    return;
 }
 
-void
+static void
 I128IBMSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg)
 {
    CARD32 tmp;
@@ -257,7 +258,7 @@ I128IBMSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg)
    return;
 }
 
-void 
+static void 
 I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src)
 {
    I128Ptr pI128 = I128PTR(pScrn);
