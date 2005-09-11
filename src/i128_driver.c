@@ -117,7 +117,7 @@ static unsigned int I128DDC1Read(ScrnInfoPtr pScrn);
 #define I128_NAME "I128"
 #define I128_DRIVER_NAME "i128"
 #define I128_MAJOR_VERSION 1
-#define I128_MINOR_VERSION 0
+#define I128_MINOR_VERSION 1
 #define I128_PATCHLEVEL 0
 
 /* 
