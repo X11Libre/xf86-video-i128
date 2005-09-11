@@ -31,6 +31,7 @@ i128_drv_ladir = @moduledir@/drivers
 i128_drv_la_SOURCES = \
          i128accel.c \
          i128dga.c \
+         i128exa.c \
          i128_driver.c \
          i128.h \
          i128IBMDAC.c \
