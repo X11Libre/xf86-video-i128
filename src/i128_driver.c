@@ -1192,6 +1192,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
 	    XF86ModReqInfo req;
 	    int errmaj, errmin;
 
+	    memset(&req, 0, sizeof(req));
 	    req.majorversion = 2;
 	    req.minorversion = 0;
             if (!LoadSubModule(pScrn->module, "exa", NULL, NULL, NULL, &req,
