@@ -116,9 +116,9 @@ static unsigned int I128DDC1Read(ScrnInfoPtr pScrn);
 #define I128_VERSION 4000
 #define I128_NAME "I128"
 #define I128_DRIVER_NAME "i128"
-#define I128_MAJOR_VERSION 1
-#define I128_MINOR_VERSION 2
-#define I128_PATCHLEVEL 1
+#define I128_MAJOR_VERSION PACKAGE_VERSION_MAJOR
+#define I128_MINOR_VERSION PACKAGE_VERSION_MINOR
+#define I128_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
 
 /* 
  * This contains the functions needed by the server after loading the
