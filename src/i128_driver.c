@@ -34,9 +34,6 @@
 #include "xf86_OSproc.h"
 #include "xf86Resources.h"
 
-/* All drivers need this */
-#include "xf86_ansic.h"
-
 #include "compiler.h"
 
 /* Drivers for PCI hardware need this */
