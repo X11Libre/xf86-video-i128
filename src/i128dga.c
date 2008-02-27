@@ -266,7 +266,7 @@ I128_OpenFramebuffer(
    int *flags
 ){
     I128Ptr pI128 = I128PTR(pScrn);
-    unsigned long FbAddress = pI128->PciInfo->memBase[0] & 0xFFC00000;
+    unsigned long FbAddress = PCI_REGION_BASE(pI128->PciInfo, 0, MEM_REGION) & 0xFFC00000;
 
     *name = NULL; 		/* no special device */
     *mem = (unsigned char*)FbAddress;

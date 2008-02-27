@@ -12,6 +12,8 @@
 #ifndef I128_H
 #define I128_H
 
+#include "i128pcirename.h"
+
 #include "compiler.h"
 #include "xaa.h"
 #include "exa.h"
@@ -35,7 +37,9 @@ struct source_format {
 typedef struct {
     EntityInfoPtr	pEnt;
     pciVideoPtr		PciInfo;
+#ifndef XSERVER_LIBPCIACCESS
     PCITAG		PciTag;
+#endif
     xf86AccessRec	Access;
     int			Chipset;
     int                 ChipRev;
