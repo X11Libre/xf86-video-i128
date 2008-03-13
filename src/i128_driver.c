@@ -66,6 +66,8 @@
 #include "i128.h"
 #include "i128reg.h"
 
+#include <unistd.h>
+
 /*
  * Forward definitions for the functions that make up the driver.
  */
@@ -1901,7 +1903,7 @@ I128DDC1Read(ScrnInfoPtr pScrn)
   ddc = inl(iobase + 0x2C);
   if ((ddc & DDC_MODE_MASK) != DDC_MODE_DDC1) {
       outl(iobase + 0x2C, DDC_MODE_DDC1);
-      xf86usleep(40);
+      usleep(40);
   }
 
   /* wait for Vsync */
@@ -1918,7 +1920,7 @@ I128DDC1Read(ScrnInfoPtr pScrn)
 
   if ((ddc & DDC_MODE_MASK) != DDC_MODE_DDC1) {
       outl(iobase + 0x2C, ~DDC_MODE_MASK & ddc);
-      xf86usleep(40);
+      usleep(40);
   }
 
   return val;
@@ -2003,14 +2005,14 @@ I128I2CInit(ScrnInfoPtr pScrn)
     soft_sw &= 0xfffffffc;
     soft_sw |= 0x00000001;
     outl(iobase + 0x28, soft_sw);
-    xf86usleep(1000);
+    usleep(1000);
 
     /* set default as ddc2 mode */
     ddc = inl(iobase + 0x2C);
     ddc &= ~DDC_MODE_MASK;
     ddc |= DDC_MODE_DDC2;
     outl(iobase + 0x2C, ddc);
-    xf86usleep(40);
+    usleep(40);
 
     if (!xf86I2CBusInit(I2CPtr)) {
         return FALSE;
