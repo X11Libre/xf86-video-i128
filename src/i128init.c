@@ -37,6 +37,8 @@
 #include "Ti302X.h"
 #include "IBMRGB.h"
 
+#include <unistd.h>
+
 static void I128SavePalette(I128Ptr pI128);
 static void I128RestorePalette(I128Ptr pI128);
 

@@ -452,11 +452,13 @@ static const struct dest_format dest_formats[] = {
     { 0, 0 }
 };
 
+#if 0
 static struct dest_format *
 i128MapDestFormat(int fmt)
 {
     return NULL;
 }
+#endif
 
 /* Composite is probably t2r and t2r4 only */
 static Bool

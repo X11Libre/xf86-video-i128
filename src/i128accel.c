@@ -56,9 +56,11 @@ static void I128SetClippingRectangle(ScrnInfoPtr pScrn, int x1, int y1,
 	int x2, int y2);
 static void I128FillSolidRects(ScrnInfoPtr pScrn, int fg, int rop,
 	unsigned int planemask, int nBox, register BoxPtr pBoxI);
+#if 0
 static void I128ScreenToScreenBitBlt(ScrnInfoPtr pScrn, int nbox,
         DDXPointPtr pptSrc, BoxPtr pbox, int xdir, int ydir, int alu,
         unsigned planemask);
+#endif
 
 #define ENG_PIPELINE_READY() { while (pI128->mem.rbase_a[BUSY] & BUSY_BUSY) ; }
 #define ENG_DONE() { while (pI128->mem.rbase_a[FLOW] & (FLOW_DEB | FLOW_MCB | FLOW_PRV)) ;}
@@ -396,7 +398,7 @@ I128FillSolidRects(ScrnInfoPtr pScrn, int fg, int rop, unsigned int planemask,
 
 }
 
-
+#if 0
 static void
 I128ScreenToScreenBitBlt(ScrnInfoPtr pScrn, int nbox, DDXPointPtr pptSrc,
 	BoxPtr pbox, int xdir, int ydir, int alu, unsigned planemask)
@@ -408,7 +410,7 @@ I128ScreenToScreenBitBlt(ScrnInfoPtr pScrn, int nbox, DDXPointPtr pptSrc,
                 pbox->x1, pbox->y1, pbox->x2 - pbox->x1, pbox->y2 - pbox->y1);
 	ENG_DONE();
 }
-
+#endif
 
 Bool
 I128XaaInit(ScreenPtr pScreen)

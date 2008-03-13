@@ -36,6 +36,7 @@
 #include "i128reg.h"
 #include "IBMRGB.h"
 
+#include <unistd.h>
 
 static void I128IBMShowCursor(ScrnInfoPtr pScrn);
 static void I128IBMHideCursor(ScrnInfoPtr pScrn);

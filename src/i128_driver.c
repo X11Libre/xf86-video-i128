@@ -797,7 +797,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
 	{
 	    unsigned short temp;
 	    pci_device_cfg_read_u16(pI128->PciInfo, &temp, 0x4);
-	    if ((temp & 0x03 == 0x03) && (PCI_SUB_DEVICE_ID(pI128->PciInfo) == 0x08))
+	    if (((temp & 0x03) == 0x03) && (PCI_SUB_DEVICE_ID(pI128->PciInfo) == 0x08))
 		pI128->MemoryType = I128_MEMORY_DRAM;
 	}
 #endif
@@ -2105,38 +2105,38 @@ I128DumpBaseRegisters(ScrnInfoPtr pScrn)
 	"  PCI Registers\n");
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    MW0_AD    0x%08lx  addr 0x%08lx  %spre-fetchable\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM),
-	    PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM) & 0xFFC00000,
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM) & 0xFFC00000),
 	    PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM) & 0x8 ? "" : "not-");
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    MW1_AD    0x%08lx  addr 0x%08lx  %spre-fetchable\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 1, REGION_MEM),
-	    PCI_REGION_BASE(pI128->PciInfo, 1, REGION_MEM) & 0xFFC00000,
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 1, REGION_MEM),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 1, REGION_MEM) & 0xFFC00000),
 	    PCI_REGION_BASE(pI128->PciInfo, 1, REGION_MEM) & 0x8 ? "" : "not-");
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    XYW_AD(A) 0x%08lx  addr 0x%08lx\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 2, REGION_MEM),
-	    PCI_REGION_BASE(pI128->PciInfo, 2, REGION_MEM) & 0xFFC00000);
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 2, REGION_MEM),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 2, REGION_MEM) & 0xFFC00000));
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    XYW_AD(B) 0x%08lx  addr 0x%08lx\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 3, REGION_MEM),
-	    PCI_REGION_BASE(pI128->PciInfo, 3, REGION_MEM) & 0xFFC00000);
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 3, REGION_MEM),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 3, REGION_MEM) & 0xFFC00000));
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    RBASE_G   0x%08lx  addr 0x%08lx\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 4, REGION_MEM),
-	    PCI_REGION_BASE(pI128->PciInfo, 4, REGION_MEM) & 0xFFFF0000);
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 4, REGION_MEM),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 4, REGION_MEM) & 0xFFFF0000));
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    IO        0x%08lx  addr 0x%08lx\n",
-	    PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO),
-	    PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO) & 0xFFFFFF00);
+	    (unsigned long)PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO),
+	    (unsigned long)(PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO) & 0xFFFFFF00));
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    SSC       0x%08x  addr 0x%08x\n",
-    	    PCI_SUB_DEVICE_ID(pI128->PciInfo),
-    	    PCI_SUB_DEVICE_ID(pI128->PciInfo) & 0xFFFFFF00);
+    	    (unsigned int)PCI_SUB_DEVICE_ID(pI128->PciInfo),
+	    (unsigned int)(PCI_SUB_DEVICE_ID(pI128->PciInfo) & 0xFFFFFF00));
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    SSV       0x%08x  addr 0x%08x\n",
-    	    PCI_SUB_VENDOR_ID(pI128->PciInfo),
-    	    PCI_SUB_VENDOR_ID(pI128->PciInfo) & 0xFFFFFF00);
+    	    (unsigned int)PCI_SUB_VENDOR_ID(pI128->PciInfo),
+	    (unsigned int)(PCI_SUB_VENDOR_ID(pI128->PciInfo) & 0xFFFFFF00));
 #ifndef XSERVER_LIBPCIACCESS
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED,
 	"    RBASE_E   0x%08lx  addr 0x%08lx  %sdecode-enabled\n\n",
