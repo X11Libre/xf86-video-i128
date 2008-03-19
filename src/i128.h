@@ -1,4 +1,3 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/i128/i128.h,v 1.5 2001/04/01 14:00:11 tsi Exp $ */
 /*
  * Number Nine I128 functions
  *

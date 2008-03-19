@@ -1,4 +1,3 @@
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/i128/i128dga.c,v 1.3tsi Exp $ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
