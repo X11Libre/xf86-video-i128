@@ -898,7 +898,6 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
 
     /* Read and print the Monitor DDC info */
     mon = I128getDDC(pScrn);
-    pScrn->monitor->DDC = mon;
 
     /* see if we can find a flatpanel */
     if (!pI128->FlatPanel && mon) {
