@@ -1442,12 +1442,21 @@ I128UnmapMem(ScrnInfoPtr pScrn)
     /*
      * Unmap IO registers to virtual address space
      */ 
+#ifndef XSERVER_LIBPCIACCESS
     xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pI128->mem.mw0_ad,
 	pI128->MemorySize*1024);
+#else
+    pci_device_unmap_range(pI128->PciInfo, pI128->mem.mw0_ad,
+	pI128->MemorySize*1024);
+#endif
     pI128->mem.mw0_ad = NULL;
     pI128->MemoryPtr = NULL;
 
+#ifndef XSERVER_LIBPCIACCESS
     xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pI128->mem.rbase_g, 64*1024);
+#else
+    pci_device_unmap_range(pI128->PciInfo, pI128->mem.rbase_g, 64*1024);
+#endif
     pI128->mem.rbase_g = NULL;
     pI128->mem.rbase_w = NULL;
     pI128->mem.rbase_a = NULL;
