@@ -1,13 +1,11 @@
 <!DOCTYPE linuxdoc PUBLIC "-//Xorg//DTD linuxdoc//EN"[
-<!ENTITY % defs SYSTEM "defs.ent"> %defs;
+<!ENTITY % defs SYSTEM "X11/defs.ent"> %defs;
 ]>
 
 <article>
 <title>Information for Number Nine I128 Users
 <author>The XFree86 Project Inc.
 <date>25 March 2004
-<ident>
-</ident>
 
 <toc>
 
@@ -87,12 +85,12 @@ Silicon Graphics Flat Panel display.
 <sect>Author(s)
 <p>
 
-Robin Cutshaw, <email>robin@XFree86.Org</email>
+Robin Cutshaw, <url url="mailto:robin@XFree86.Org">
 
 and special help from:
 
 <itemize>
-<item>Galen Brooks, <email>galen@interlabs.com</email>
+<item>Galen Brooks, <url url="mailto:galen@interlabs.com">
 </itemize>
 
 </article>
