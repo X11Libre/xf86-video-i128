@@ -80,8 +80,6 @@ AM_CONDITIONAL(XSERVER_LIBPCIACCESS, test "x$XSERVER_LIBPCIACCESS" = xyes)
 # Required by exa.h
 AC_DEFINE(EXA_DRIVER_KNOWN_MAJOR, 3, [Major version of EXA we can handle])
 
-# Checks for header files.
-AC_HEADER_STDC
 
 AC_SUBST([XORG_CFLAGS])
 AC_SUBST([moduledir])
