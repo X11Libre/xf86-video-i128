@@ -446,7 +446,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     int i;
     ClockRangePtr clockRanges;
     MessageType from;
-    IOADDRESS iobase;
+    unsigned long iobase;
     char *ramdac = NULL;
     CARD32 tmpl, tmph, tmp;
     unsigned char n, m, p, mdc, df;
@@ -1804,7 +1804,7 @@ I128DDC1Read(ScrnInfoPtr pScrn)
   I128Ptr pI128 = I128PTR(pScrn);
   unsigned char val;
   unsigned long tmp, ddc;
-  IOADDRESS iobase;
+  unsigned long iobase;
 
   iobase = pI128->RegRec.iobase;
   ddc = inl(iobase + 0x2C);
@@ -1839,7 +1839,7 @@ I128I2CGetBits(I2CBusPtr b, int *clock, int *data)
 {
   I128Ptr pI128 = I128PTR(xf86Screens[b->scrnIndex]);
   unsigned long ddc;
-  IOADDRESS iobase;
+  unsigned long iobase;
 #if 0
   static int lastclock = -1, lastdata = -1;
 #endif
@@ -1867,7 +1867,7 @@ I128I2CPutBits(I2CBusPtr b, int clock, int data)
   unsigned char drv, val;
   unsigned long ddc;
   unsigned long tmp;
-  IOADDRESS iobase;
+  unsigned long iobase;
 
   iobase = pI128->RegRec.iobase;
   ddc = inl(iobase + 0x2C);
@@ -1889,7 +1889,7 @@ I128I2CInit(ScrnInfoPtr pScrn)
 {       
     I128Ptr pI128 = I128PTR(pScrn);
     I2CBusPtr I2CPtr;
-    IOADDRESS iobase;
+    unsigned long iobase;
     unsigned long soft_sw, ddc;
      
     I2CPtr = xf86CreateI2CBusRec();
@@ -2102,7 +2102,7 @@ void
 I128DumpActiveRegisters(ScrnInfoPtr pScrn)
 {
     I128Ptr pI128 = I128PTR(pScrn);
-    IOADDRESS iobase;
+    unsigned long iobase;
     unsigned long rbase_g, rbase_w, rbase_a, rbase_b, rbase_i, rbase_e;
     unsigned long id, config1, config2, sgram, soft_sw, ddc, vga_ctl;
     volatile CARD32 *vrba, *vrbg, *vrbw;
