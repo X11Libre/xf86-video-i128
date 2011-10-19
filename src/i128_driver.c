@@ -650,7 +650,10 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
         xf86DrvMsg(pScrn->scrnIndex, from, "Subsystem Vendor: \"%x\"\n",
     	    PCI_SUB_VENDOR_ID(pI128->PciInfo));
 
-    iobase = (PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO) & 0xFFFFFF00) + hwp->PIOOffset;
+    iobase = (PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO) & 0xFFFFFF00);
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
+    iobase += hwp->PIOOffset;
+#endif
     pI128->RegRec.iobase = iobase;
 
     pI128->io.rbase_g = inl(iobase)        & 0xFFFFFF00;
