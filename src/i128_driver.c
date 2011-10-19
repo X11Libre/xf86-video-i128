@@ -304,13 +304,13 @@ I128Probe(DriverPtr drv, int flags)
 			numDevSections, drv, &usedChips);
 
     /* Free it since we don't need that list after this */
-    xfree(devSections);
+    free(devSections);
 
     if (numUsed <= 0)
 	return FALSE;
 
     if (flags & PROBE_DETECT) {
-	xfree(usedChips);
+	free(usedChips);
 	return FALSE;
     }
 
@@ -340,7 +340,7 @@ I128Probe(DriverPtr drv, int flags)
 	foundScreen = TRUE;
     }
 
-    xfree(usedChips);
+    free(usedChips);
 
     return foundScreen;
 }
@@ -558,7 +558,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     xf86CollectOptions(pScrn, NULL);
 
     /* Process the options */
-    if (!(pI128->Options = xalloc(sizeof(I128Options))))
+    if (!(pI128->Options = malloc(sizeof(I128Options))))
 	return FALSE;
     memcpy(pI128->Options, I128Options, sizeof(I128Options));
     xf86ProcessOptions(pScrn->scrnIndex, pScrn->options, pI128->Options);
@@ -1157,7 +1157,7 @@ I128FreeRec(ScrnInfoPtr pScrn)
 {
     if (pScrn->driverPrivate == NULL)
 	return;
-    xfree(pScrn->driverPrivate);
+    free(pScrn->driverPrivate);
     pScrn->driverPrivate = NULL;
 }
 
@@ -1704,12 +1704,12 @@ I128CloseScreen(int scrnIndex, ScreenPtr pScreen)
 	XAADestroyInfoRec(pI128->XaaInfoRec);
     if (pI128->ExaDriver) {
         exaDriverFini(pScreen);
-        xfree(pI128->ExaDriver);
+        free(pI128->ExaDriver);
     }
     if (pI128->CursorInfoRec)
     	xf86DestroyCursorInfoRec(pI128->CursorInfoRec);
     if (pI128->DGAModes)
-    	xfree(pI128->DGAModes);
+    	free(pI128->DGAModes);
     pScrn->vtSema = FALSE;
 
     pScreen->CloseScreen = pI128->CloseScreen;
