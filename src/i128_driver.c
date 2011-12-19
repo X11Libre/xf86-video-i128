@@ -492,6 +492,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
         return FALSE;
  
     hwp = VGAHWPTR(pScrn);
+    vgaHWSetStdFuncs(hwp);
     vgaHWGetIOBase(hwp);
 
     /* Set pScrn->monitor */
