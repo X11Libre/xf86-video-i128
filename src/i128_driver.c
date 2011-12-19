@@ -1117,8 +1117,9 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
             }
         } else {
             if (!xf86LoadSubModule(pScrn, "xaa")) {
-	        I128FreeRec(pScrn);
-	        return FALSE;
+		xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
+			   "No acceleration available\n");
+		pI128->NoAccel = 1;
 	    }
         }
     }
