@@ -416,7 +416,7 @@ Bool
 I128XaaInit(ScreenPtr pScreen)
 {
 	XAAInfoRecPtr infoPtr;
-	ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
 	I128Ptr pI128 = I128PTR(pScrn);
 	BoxRec AvailFBArea;
 	CARD32 buf_ctrl;

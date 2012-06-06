@@ -46,7 +46,7 @@ DGAFunctionRec I128_DGAFuncs = {
 Bool
 I128DGAInit(ScreenPtr pScreen)
 {   
-   ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+   ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
    I128Ptr pI128 = I128PTR(pScrn);
    DGAModePtr modes = NULL, newmodes = NULL, currentMode;
    DisplayModePtr pMode, firstMode;
@@ -153,7 +153,7 @@ I128_SetMode(
 	
 	pScrn->displayWidth = OldDisplayWidth[index];
 	
-        I128SwitchMode(index, pScrn->currentMode, 0);
+        I128SwitchMode(SWITCH_MODE_ARGS(pScrn, pScrn->currentMode));
 	pI128->DGAactive = FALSE;
    } else {
 	if(!pI128->DGAactive) {  /* save the old parameters */
@@ -165,7 +165,7 @@ I128_SetMode(
 	pScrn->displayWidth = pMode->bytesPerScanline / 
 			      (pMode->bitsPerPixel >> 3);
 
-        I128SwitchMode(index, pMode->mode, 0);
+        I128SwitchMode(SWITCH_MODE_ARGS(pScrn, pMode->mode));
    }
    
    return TRUE;
@@ -190,7 +190,7 @@ I128_SetViewport(
 ){
    I128Ptr pI128 = I128PTR(pScrn);
 
-   I128AdjustFrame(pScrn->pScreen->myNum, x, y, flags);
+   I128AdjustFrame(ADJUST_FRAME_ARGS(pScrn, x, y));
    pI128->DGAViewportStatus = 0;  /* I128AdjustFrame loops until finished */
 }
 
