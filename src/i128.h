@@ -14,7 +14,9 @@
 #include "i128pcirename.h"
 
 #include "compiler.h"
+#ifdef HAVE_XAA_H
 #include "xaa.h"
+#endif
 #include "exa.h"
 #include "xf86Cursor.h"
 #include "vgaHW.h"
@@ -115,7 +117,9 @@ typedef struct {
     int			minClock;
 
     CloseScreenProcPtr  CloseScreen;
+#ifdef HAVE_XAA_H
     XAAInfoRecPtr	XaaInfoRec;
+#endif
     ExaDriverPtr        ExaDriver;
     xf86CursorInfoPtr	CursorInfoRec;
     I2CBusPtr		I2C;

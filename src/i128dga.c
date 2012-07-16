@@ -7,8 +7,6 @@
 #include "xf86_OSproc.h"
 #include "xf86Pci.h"
 #include "xf86PciInfo.h"
-#include "xaa.h"
-#include "xaalocal.h"
 #include "i128.h"
 #include "dgaproc.h"
 
@@ -18,11 +16,13 @@ static Bool I128_OpenFramebuffer(ScrnInfoPtr, char **, unsigned char **,
 static Bool I128_SetMode(ScrnInfoPtr, DGAModePtr);
 static int  I128_GetViewport(ScrnInfoPtr);
 static void I128_SetViewport(ScrnInfoPtr, int, int, int);
+#ifdef HAVE_XAA_H
 static void I128_FillRect(ScrnInfoPtr, int, int, int, int, unsigned long);
 static void I128_BlitRect(ScrnInfoPtr, int, int, int, int, int, int);
 #if 0
 static void I128_BlitTransRect(ScrnInfoPtr, int, int, int, int, int, int, 
 					unsigned long);
+#endif
 #endif
 
 static
@@ -33,12 +33,16 @@ DGAFunctionRec I128_DGAFuncs = {
    I128_SetViewport,
    I128_GetViewport,
    I128EngineDone,
+#ifdef HAVE_XAA_H
    I128_FillRect,
    I128_BlitRect,
 #if 0
    I128_BlitTransRect
 #else
    NULL
+#endif
+#else
+   NULL, NULL, NULL
 #endif
 };
 
@@ -194,6 +198,7 @@ I128_SetViewport(
    pI128->DGAViewportStatus = 0;  /* I128AdjustFrame loops until finished */
 }
 
+#ifdef HAVE_XAA_H
 static void 
 I128_FillRect (
    ScrnInfoPtr pScrn, 
@@ -253,7 +258,7 @@ I128_BlitTransRect(
     }
 }
 #endif
-
+#endif
 static Bool 
 I128_OpenFramebuffer(
    ScrnInfoPtr pScrn, 

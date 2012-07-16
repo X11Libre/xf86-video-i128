@@ -57,7 +57,6 @@
 #include "xf86DDC.h"
 #include "vbe.h"
 
-#include "xaa.h"
 #include "xf86cmap.h"
 #include "fb.h"
 
@@ -1704,8 +1703,10 @@ I128CloseScreen(CLOSE_SCREEN_ARGS_DECL)
 	I128Restore(pScrn);
 	I128UnmapMem(pScrn);
     }
+#ifdef HAVE_XAA_H
     if (pI128->XaaInfoRec)
 	XAADestroyInfoRec(pI128->XaaInfoRec);
+#endif
     if (pI128->ExaDriver) {
         exaDriverFini(pScreen);
         free(pI128->ExaDriver);
