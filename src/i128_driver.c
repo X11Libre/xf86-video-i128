@@ -55,7 +55,6 @@
 #include "micmap.h"
 
 #include "xf86DDC.h"
-#include "vbe.h"
 
 #include "xf86cmap.h"
 #include "fb.h"
