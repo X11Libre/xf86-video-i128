@@ -447,11 +447,11 @@ struct dest_format {
     int i128_format;
 };
 
+#if 0
 static const struct dest_format dest_formats[] = {
     { 0, 0 }
 };
 
-#if 0
 static struct dest_format *
 i128MapDestFormat(int fmt)
 {
