@@ -439,7 +439,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     ClockRangePtr clockRanges;
     MessageType from;
     unsigned long iobase;
-    char *ramdac = NULL;
+    const char *ramdac = NULL;
     CARD32 tmpl, tmph, tmp;
     unsigned char n, m, p, mdc, df;
     float mclk;
