@@ -14,9 +14,6 @@
 #include "i128pcirename.h"
 
 #include "compiler.h"
-#ifdef HAVE_XAA_H
-#include "xaa.h"
-#endif
 #include "exa.h"
 #include "xf86Cursor.h"
 #include "vgaHW.h"
@@ -82,7 +79,6 @@ typedef struct {
     CARD32		blitdir;
     CARD32              planemask;
     CARD32		cmd;
-    CARD32		rop; /* XXX XAA only */
     CARD32		clptl;
     CARD32		clpbr;
     CARD32              sorg;
@@ -123,9 +119,6 @@ typedef struct {
     int			minClock;
 
     CloseScreenProcPtr  CloseScreen;
-#ifdef HAVE_XAA_H
-    XAAInfoRecPtr	XaaInfoRec;
-#endif
     ExaDriverPtr        ExaDriver;
     xf86CursorInfoPtr	CursorInfoRec;
     I2CBusPtr		I2C;
@@ -149,9 +142,7 @@ Bool I128SwitchMode(SWITCH_MODE_ARGS_DECL);
 
 Bool I128HWCursorInit(ScreenPtr pScreen);
 
-Bool I128XaaInit(ScreenPtr pScreen);
 Bool I128ExaInit(ScreenPtr pScreen);
-void I128EngineDone(ScrnInfoPtr pScrn);
 
 Bool I128Init(ScrnInfoPtr pScrn, DisplayModePtr mode);
 

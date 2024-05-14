@@ -647,10 +647,6 @@ I128ExaInit(ScreenPtr pScreen)
         pExa->DoneComposite = i128Done;
     }
 
-    /*
-     * XXX much of this is duplicated from the XAA code, but I expect the XAA
-     * support to disappear eventually.
-     */
     pI128->buf_ctrl = 0; /* force write */
     i128SetBufCtrl(pI128, pI128->bitsPerPixel);
 

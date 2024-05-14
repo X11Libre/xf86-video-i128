@@ -31,10 +31,6 @@
 /* All drivers should typically include these */
 #include "xf86.h"
 #include "xf86_OSproc.h"
-#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
-#include "xf86Resources.h"
-#include "xf86RAC.h"
-#endif
 
 #include "compiler.h"
 
@@ -587,7 +583,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
             from = X_CONFIG;
         }
         xf86DrvMsg(pScrn->scrnIndex, from, "Using %s acceleration\n",
-                   pI128->exa ? "EXA" : "XAA");
+                   pI128->exa ? "EXA" : "no");
     }
     if (xf86ReturnOptValBool(pI128->Options, OPTION_SYNC_ON_GREEN, FALSE)) {
 	pI128->DACSyncOnGreen = TRUE;
@@ -1109,11 +1105,9 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
                 return FALSE;
             }
         } else {
-            if (!xf86LoadSubModule(pScrn, "xaa")) {
-		xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
-			   "No acceleration available\n");
-		pI128->NoAccel = 1;
-	    }
+	    xf86DrvMsg(pScrn->scrnIndex, X_WARNING,
+		       "No acceleration available\n");
+	    pI128->NoAccel = 1;
         }
     }
 
@@ -1542,7 +1536,7 @@ I128ScreenInit(SCREEN_INIT_ARGS_DECL)
             ret = I128ExaInit(pScreen);
         else {
             I128DGAInit(pScreen);
-            ret = I128XaaInit(pScreen);
+            ret = FALSE;
         }
     }
 
@@ -1696,10 +1690,6 @@ I128CloseScreen(CLOSE_SCREEN_ARGS_DECL)
 	I128Restore(pScrn);
 	I128UnmapMem(pScrn);
     }
-#ifdef HAVE_XAA_H
-    if (pI128->XaaInfoRec)
-	XAADestroyInfoRec(pI128->XaaInfoRec);
-#endif
     if (pI128->ExaDriver) {
         exaDriverFini(pScreen);
         free(pI128->ExaDriver);

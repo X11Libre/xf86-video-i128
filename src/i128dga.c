@@ -15,14 +15,7 @@ static Bool I128_OpenFramebuffer(ScrnInfoPtr, char **, unsigned char **,
 static Bool I128_SetMode(ScrnInfoPtr, DGAModePtr);
 static int  I128_GetViewport(ScrnInfoPtr);
 static void I128_SetViewport(ScrnInfoPtr, int, int, int);
-#ifdef HAVE_XAA_H
-static void I128_FillRect(ScrnInfoPtr, int, int, int, int, unsigned long);
-static void I128_BlitRect(ScrnInfoPtr, int, int, int, int, int, int);
-#if 0
-static void I128_BlitTransRect(ScrnInfoPtr, int, int, int, int, int, int, 
-					unsigned long);
-#endif
-#endif
+static void I128_EngineDone(ScrnInfoPtr pScrn);
 
 static
 DGAFunctionRec I128_DGAFuncs = {
@@ -31,18 +24,8 @@ DGAFunctionRec I128_DGAFuncs = {
    I128_SetMode,
    I128_SetViewport,
    I128_GetViewport,
-   I128EngineDone,
-#ifdef HAVE_XAA_H
-   I128_FillRect,
-   I128_BlitRect,
-#if 0
-   I128_BlitTransRect
-#else
-   NULL
-#endif
-#else
+   I128_EngineDone,
    NULL, NULL, NULL
-#endif
 };
 
 
@@ -197,67 +180,6 @@ I128_SetViewport(
    pI128->DGAViewportStatus = 0;  /* I128AdjustFrame loops until finished */
 }
 
-#ifdef HAVE_XAA_H
-static void 
-I128_FillRect (
-   ScrnInfoPtr pScrn, 
-   int x, int y, int w, int h, 
-   unsigned long color
-){
-    I128Ptr pI128 = I128PTR(pScrn);
-
-    if(pI128->XaaInfoRec) {
-	(*pI128->XaaInfoRec->SetupForSolidFill)(pScrn, color, GXcopy, ~0);
-	(*pI128->XaaInfoRec->SubsequentSolidFillRect)(pScrn, x, y, w, h);
-	SET_SYNC_FLAG(pI128->XaaInfoRec);
-    }
-}
-
-static void 
-I128_BlitRect(
-   ScrnInfoPtr pScrn, 
-   int srcx, int srcy, 
-   int w, int h, 
-   int dstx, int dsty
-){
-    I128Ptr pI128 = I128PTR(pScrn);
-
-    if(pI128->XaaInfoRec) {
-	int xdir = ((srcx < dstx) && (srcy == dsty)) ? -1 : 1;
-	int ydir = (srcy < dsty) ? -1 : 1;
-
-	(*pI128->XaaInfoRec->SetupForScreenToScreenCopy)(
-		pScrn, xdir, ydir, GXcopy, ~0, -1);
-	(*pI128->XaaInfoRec->SubsequentScreenToScreenCopy)(
-		pScrn, srcx, srcy, dstx, dsty, w, h);
-	SET_SYNC_FLAG(pI128->XaaInfoRec);
-    }
-}
-
-#if 0
-static void 
-I128_BlitTransRect(
-   ScrnInfoPtr pScrn, 
-   int srcx, int srcy, 
-   int w, int h, 
-   int dstx, int dsty,
-   unsigned long color
-){
-    I128Ptr pI128 = I128PTR(pScrn);
-
-    if(pI128->XaaInfoRec) {
-	int xdir = ((srcx < dstx) && (srcy == dsty)) ? -1 : 1;
-	int ydir = (srcy < dsty) ? -1 : 1;
-
-	(*pI128->XaaInfoRec->SetupForScreenToScreenCopy)(
-		pScrn, xdir, ydir, GXcopy, ~0, color);
-	(*pI128->XaaInfoRec->SubsequentScreenToScreenCopy)(
-		pScrn, srcx, srcy, dstx, dsty, w, h);
-	SET_SYNC_FLAG(pI128->XaaInfoRec);
-    }
-}
-#endif
-#endif
 static Bool 
 I128_OpenFramebuffer(
    ScrnInfoPtr pScrn, 
@@ -277,4 +199,14 @@ I128_OpenFramebuffer(
     *flags = DGA_NEED_ROOT;
 
     return TRUE;
+}
+
+#define ENG_DONE() \
+    while (pI128->mem.rbase_a[FLOW] & (FLOW_DEB | FLOW_MCB | FLOW_PRV))
+
+static void
+I128_EngineDone(ScrnInfoPtr pScrn)
+{
+    I128Ptr pI128 = I128PTR(pScrn);
+    ENG_DONE();
 }
