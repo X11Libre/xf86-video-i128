@@ -21,7 +21,6 @@
 #include "xf86DDC.h"
 #include "i128reg.h"
 
-#include "compat-api.h"
 struct source_format {
     int render_format;
     int i128_format;
@@ -137,8 +136,8 @@ typedef struct {
 
 /* Prototypes */
 
-void I128AdjustFrame(ADJUST_FRAME_ARGS_DECL);
-Bool I128SwitchMode(SWITCH_MODE_ARGS_DECL);
+void I128AdjustFrame(ScrnInfoPtr pScrn, int x, int y);
+Bool I128SwitchMode(ScrnInfoPtr pScrn, DisplayModePtr mode);
 
 Bool I128HWCursorInit(ScreenPtr pScreen);
 

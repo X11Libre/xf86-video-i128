@@ -29,7 +29,6 @@ i128_drv_la_LDFLAGS = -module -avoid-version
 i128_drv_ladir = @moduledir@/drivers
 
 i128_drv_la_SOURCES = \
-         compat-api.h \
          i128dga.c \
          i128exa.c \
          i128_driver.c \

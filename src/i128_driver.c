@@ -68,18 +68,18 @@ static const OptionInfoRec *	I128AvailableOptions(int chipid, int busid);
 static void	I128Identify(int flags);
 static Bool	I128Probe(DriverPtr drv, int flags);
 static Bool	I128PreInit(ScrnInfoPtr pScrn, int flags);
-static Bool	I128ScreenInit(SCREEN_INIT_ARGS_DECL);
-static Bool	I128EnterVT(VT_FUNC_ARGS_DECL);
-static void	I128LeaveVT(VT_FUNC_ARGS_DECL);
-static Bool	I128CloseScreen(CLOSE_SCREEN_ARGS_DECL);
+static Bool	I128ScreenInit(ScreenPtr pScreen, int argc, char **argv);
+static Bool	I128EnterVT(ScrnInfoPtr pScrn);
+static void	I128LeaveVT(ScrnInfoPtr pScrn);
+static Bool	I128CloseScreen(ScreenPtr pScreen);
 static Bool	I128SaveScreen(ScreenPtr pScreen, int mode);
 
 static void I128DumpBaseRegisters(ScrnInfoPtr pScrn);
 static void I128DumpIBMDACRegisters(ScrnInfoPtr pScrn, volatile CARD32 *vrbg);
 
 /* Optional functions */
-static void	I128FreeScreen(FREE_SCREEN_ARGS_DECL);
-static ModeStatus I128ValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode,
+static void	I128FreeScreen(ScrnInfoPtr pScrn);
+static ModeStatus I128ValidMode(ScrnInfoPtr pScrn, DisplayModePtr mode,
 				Bool verbose, int flags);
 static void	I128DisplayPowerManagementSet(ScrnInfoPtr pScrn,
 					     int PowerManagementMode,
@@ -640,9 +640,6 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     	    PCI_SUB_VENDOR_ID(pI128->PciInfo));
 
     iobase = (PCI_REGION_BASE(pI128->PciInfo, 5, REGION_IO) & 0xFFFFFF00);
-#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
-    iobase += hwp->PIOOffset;
-#endif
     pI128->RegRec.iobase = iobase;
 
     pI128->io.rbase_g = inl(iobase)        & 0xFFFFFF00;
@@ -1392,9 +1389,8 @@ I128Restore(ScrnInfoPtr pScrn)
 
 /* Usually mandatory */
 Bool
-I128SwitchMode(SWITCH_MODE_ARGS_DECL)
+I128SwitchMode(ScrnInfoPtr pScrn, DisplayModePtr mode)
 {
-    SCRN_INFO_PTR(arg);
     return I128ModeInit(pScrn, mode);
 }
 
@@ -1429,7 +1425,7 @@ I128ModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 /* This gets called at the start of each server generation */
 
 static Bool
-I128ScreenInit(SCREEN_INIT_ARGS_DECL)
+I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
 {
     ScrnInfoPtr pScrn;
     I128Ptr pI128;
@@ -1464,7 +1460,7 @@ I128ScreenInit(SCREEN_INIT_ARGS_DECL)
 
     /* Darken the screen for aesthetic reasons and set the viewport */
     I128SaveScreen(pScreen, SCREEN_SAVER_ON);
-    pScrn->AdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
+    pScrn->AdjustFrame(pScrn, pScrn->frameX0, pScrn->frameY0);
 
     /*
      * The next step is to setup the screen's visuals, and initialise the
@@ -1614,9 +1610,8 @@ I128ScreenInit(SCREEN_INIT_ARGS_DECL)
  */
 /* Usually mandatory */
 void
-I128AdjustFrame(ADJUST_FRAME_ARGS_DECL)
+I128AdjustFrame(ScrnInfoPtr pScrn, int x, int y)
 {
-    SCRN_INFO_PTR(arg);
     int   Base;
     I128Ptr pI128;
 #define I128_PAN_MASK 0x01FFFFE0
@@ -1646,13 +1641,11 @@ I128AdjustFrame(ADJUST_FRAME_ARGS_DECL)
 
 /* Mandatory */
 static Bool
-I128EnterVT(VT_FUNC_ARGS_DECL)
+I128EnterVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
-
     if (!I128ModeInit(pScrn, pScrn->currentMode))
 	return FALSE;
-    I128AdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
+    I128AdjustFrame(pScrn, pScrn->frameX0, pScrn->frameY0);
     return TRUE;
 }
 
@@ -1664,10 +1657,8 @@ I128EnterVT(VT_FUNC_ARGS_DECL)
 
 /* Mandatory */
 static void
-I128LeaveVT(VT_FUNC_ARGS_DECL)
+I128LeaveVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
-
     I128Restore(pScrn);
 }
 
@@ -1681,7 +1672,7 @@ I128LeaveVT(VT_FUNC_ARGS_DECL)
 
 /* Mandatory */
 static Bool
-I128CloseScreen(CLOSE_SCREEN_ARGS_DECL)
+I128CloseScreen(ScreenPtr pScreen)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     I128Ptr pI128 = I128PTR(pScrn);
@@ -1701,7 +1692,7 @@ I128CloseScreen(CLOSE_SCREEN_ARGS_DECL)
     pScrn->vtSema = FALSE;
 
     pScreen->CloseScreen = pI128->CloseScreen;
-    return (*pScreen->CloseScreen)(CLOSE_SCREEN_ARGS);
+    return (*pScreen->CloseScreen)(pScreen);
 }
 
 
@@ -1709,9 +1700,8 @@ I128CloseScreen(CLOSE_SCREEN_ARGS_DECL)
 
 /* Optional */
 static void
-I128FreeScreen(FREE_SCREEN_ARGS_DECL)
+I128FreeScreen(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     /*
      * This only gets called when a screen is being deleted.  It does not
      * get called routinely at the end of a server generation.
@@ -1727,7 +1717,7 @@ I128FreeScreen(FREE_SCREEN_ARGS_DECL)
 
 /* Optional */
 static ModeStatus
-I128ValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode, Bool verbose, int flags)
+I128ValidMode(ScrnInfoPtr pScrn, DisplayModePtr mode, Bool verbose, int flags)
 {
     int lace;
 
@@ -1929,7 +1919,7 @@ I128getDDC(ScrnInfoPtr pScrn)
   }
   /* Read and output monitor info using DDC2 over I2C bus */
   if (pI128->I2C) {
-    MonInfo = xf86DoEDID_DDC2(XF86_SCRN_ARG(pScrn), pI128->I2C);
+    MonInfo = xf86DoEDID_DDC2(pScrn, pI128->I2C);
     xf86DrvMsg(pScrn->scrnIndex, X_INFO, "I2C Monitor info: %p\n",
 	       (void *)MonInfo);
     xf86PrintEDID(MonInfo);
@@ -1938,7 +1928,7 @@ I128getDDC(ScrnInfoPtr pScrn)
   if (!MonInfo) {
     /* Read and output monitor info using DDC1 */
     if (pI128->ddc1Read) {
-      MonInfo = xf86DoEDID_DDC1(XF86_SCRN_ARG(pScrn), NULL, pI128->ddc1Read ) ;
+      MonInfo = xf86DoEDID_DDC1(pScrn, NULL, pI128->ddc1Read ) ;
       xf86DrvMsg(pScrn->scrnIndex, X_INFO, "DDC Monitor info: %p\n",
 		 (void *)MonInfo);
       xf86PrintEDID(MonInfo);
