@@ -79,7 +79,7 @@ I128IBMHWCursorInit(ScrnInfoPtr pScrn)
 }
 
 
-static void 
+static void
 I128IBMShowCursor(ScrnInfoPtr pScrn)
 {
    CARD32 tmpl, tmph;
@@ -180,7 +180,7 @@ I128IBMSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg)
    return;
 }
 
-static void 
+static void
 I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src)
 {
    I128Ptr pI128 = I128PTR(pScrn);
@@ -213,7 +213,7 @@ I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src)
 
    pI128->mem.rbase_g[IDXCTL_I] = 1; /* enable auto-inc */		MB;
 
-   /* 
+   /*
     * Output the cursor data.  The realize function has put the planes into
     * their correct order, so we can just blast this out.
     */
@@ -233,11 +233,11 @@ I128IBMLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src)
 
 static Bool
 I128IBMUseHWCursor(ScreenPtr pScrn, CursorPtr pCurs)
-{           
+{
    if( XF86SCRNINFO(pScrn)->currentMode->Flags & V_DBLSCAN )
       return FALSE;
    return TRUE;
-}           
+}
 
 
 Bool I128TIHWCursorInit(ScrnInfoPtr pScrn) { return FALSE; }

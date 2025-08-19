@@ -10,7 +10,7 @@
 #include "dgaproc.h"
 
 
-static Bool I128_OpenFramebuffer(ScrnInfoPtr, char **, unsigned char **, 
+static Bool I128_OpenFramebuffer(ScrnInfoPtr, char **, unsigned char **,
 					int *, int *, int *);
 static Bool I128_SetMode(ScrnInfoPtr, DGAModePtr);
 static int  I128_GetViewport(ScrnInfoPtr);
@@ -31,7 +31,7 @@ DGAFunctionRec I128_DGAFuncs = {
 
 Bool
 I128DGAInit(ScreenPtr pScreen)
-{   
+{
    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
    I128Ptr pI128 = I128PTR(pScrn);
    DGAModePtr modes = NULL, newmodes = NULL, currentMode;
@@ -91,7 +91,7 @@ SECOND_PASS:
 	    currentMode->imageHeight =  pMode->VDisplay;
 	    currentMode->pixmapWidth = currentMode->imageWidth;
 	    currentMode->pixmapHeight = currentMode->imageHeight;
-	    currentMode->maxViewportX = currentMode->imageWidth - 
+	    currentMode->maxViewportX = currentMode->imageWidth -
 					currentMode->viewportWidth;
 	    /* this might need to get clamped to some maximum */
 	    currentMode->maxViewportY = currentMode->imageHeight -
@@ -99,18 +99,18 @@ SECOND_PASS:
 	    oneMore = FALSE;
 	    goto SECOND_PASS;
 	} else {
-	    currentMode->bytesPerScanline = 
+	    currentMode->bytesPerScanline =
 			((pScrn->displayWidth * Bpp) + 3) & ~3L;
 	    currentMode->imageWidth = pScrn->displayWidth;
 	    currentMode->imageHeight =  pMode->VDisplay;
 	    currentMode->pixmapWidth = currentMode->imageWidth;
 	    currentMode->pixmapHeight = currentMode->imageHeight;
-	    currentMode->maxViewportX = currentMode->imageWidth - 
+	    currentMode->maxViewportX = currentMode->imageWidth -
 					currentMode->viewportWidth;
 	    /* this might need to get clamped to some maximum */
 	    currentMode->maxViewportY = currentMode->imageHeight -
 					currentMode->viewportHeight;
-	}	    
+	}
 
 	pMode = pMode->next;
 	if(pMode == firstMode)
@@ -120,7 +120,7 @@ SECOND_PASS:
    pI128->numDGAModes = num;
    pI128->DGAModes = modes;
 
-    return DGAInit(pScreen, &I128_DGAFuncs, modes, num);  
+    return DGAInit(pScreen, &I128_DGAFuncs, modes, num);
 }
 
 
@@ -136,9 +136,9 @@ I128_SetMode(
 
    if(!pMode) { /* restore the original mode */
 	/* put the ScreenParameters back */
-	
+
 	pScrn->displayWidth = OldDisplayWidth[index];
-	
+
         I128SwitchMode(pScrn, pScrn->currentMode);
 	pI128->DGAactive = FALSE;
    } else {
@@ -148,18 +148,18 @@ I128_SetMode(
 	    pI128->DGAactive = TRUE;
 	}
 
-	pScrn->displayWidth = pMode->bytesPerScanline / 
+	pScrn->displayWidth = pMode->bytesPerScanline /
 			      (pMode->bitsPerPixel >> 3);
 
         I128SwitchMode(pScrn, pMode->mode);
    }
-   
+
    return TRUE;
 }
 
 
 
-static int  
+static int
 I128_GetViewport(
   ScrnInfoPtr pScrn
 ){
@@ -168,10 +168,10 @@ I128_GetViewport(
     return pI128->DGAViewportStatus;
 }
 
-static void 
+static void
 I128_SetViewport(
-   ScrnInfoPtr pScrn, 
-   int x, int y, 
+   ScrnInfoPtr pScrn,
+   int x, int y,
    int flags
 ){
    I128Ptr pI128 = I128PTR(pScrn);
@@ -180,9 +180,9 @@ I128_SetViewport(
    pI128->DGAViewportStatus = 0;  /* I128AdjustFrame loops until finished */
 }
 
-static Bool 
+static Bool
 I128_OpenFramebuffer(
-   ScrnInfoPtr pScrn, 
+   ScrnInfoPtr pScrn,
    char **name,
    unsigned char **mem,
    int *size,

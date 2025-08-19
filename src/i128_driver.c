@@ -1,7 +1,7 @@
 /*
  * Copyright 1995-2000 by Robin Cutshaw <robin@XFree86.Org>
  * Copyright 1998 by Number Nine Visual Technology, Inc.
- * 
+ *
  * Permission to use, copy, modify, distribute, and sell this software and its
  * documentation for any purpose is hereby granted without fee, provided that
  * the above copyright notice appear in all copies and that both that
@@ -108,7 +108,7 @@ static unsigned int I128DDC1Read(ScrnInfoPtr pScrn);
 #define I128_MINOR_VERSION PACKAGE_VERSION_MINOR
 #define I128_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
 
-/* 
+/*
  * This contains the functions needed by the server after loading the
  * driver module.  It must be supplied, and gets added the driver list by
  * the Module Setup function in the dynamic case.  In the static case a
@@ -304,14 +304,14 @@ I128Probe(DriverPtr drv, int flags)
 
     for (i = 0; i < numUsed; i++) {
 	ScrnInfoPtr pScrn = NULL;
-	
+
 	/* Allocate a ScrnInfoRec and claim the slot */
         if ((pScrn = xf86ConfigPciEntity(pScrn, 0,usedChips[i],
                                          I128PciChipsets, NULL, NULL,
                                          NULL, NULL, NULL)) == NULL)
 		continue;
 
-	
+
 	/* Fill in what we can of the ScrnInfoRec */
 	pScrn->driverVersion	= I128_VERSION;
 	pScrn->driverName	= I128_DRIVER_NAME;
@@ -419,7 +419,7 @@ I128AvailableOptions(int chipid, int busid)
  * for per-generation data.
  *
  * Arguments:
- *		ScrnInfoPtr pScrn - 
+ *		ScrnInfoPtr pScrn -
  *		int flags     - PROBE_DEFAULT for normal function
  *		                PROBE_DETECT for use with "-config" and "-probe"
  * Returns:
@@ -472,13 +472,13 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     /* The vgahw module should be allocated here when needed */
     if (!xf86LoadSubModule(pScrn, "vgahw"))
         return FALSE;
-    
+
     /*
      * Allocate a vgaHWRec
      */
     if (!vgaHWGetHWRec(pScrn))
         return FALSE;
- 
+
     hwp = VGAHWPTR(pScrn);
     vgaHWSetStdFuncs(hwp);
     vgaHWGetIOBase(hwp);
@@ -737,7 +737,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "VideoRAM: %d kByte\n",
                pScrn->videoRam);
 
-	
+
     /*
      * If the driver can do gamma correction, it should call xf86SetGamma()
      * here.
@@ -1022,9 +1022,9 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
     {
 	int *linePitches = NULL;
 	int minPitch = 256;
-	int maxPitch = 2048;	
-	int pitchAlignment = 256;	
-        
+	int maxPitch = 2048;
+	int pitchAlignment = 256;
+
 	if (pI128->MemoryType == I128_MEMORY_WRAM)
 	   pitchAlignment = (128 * 8);
 	pitchAlignment /= pI128->bitsPerPixel;
@@ -1172,7 +1172,7 @@ I128SoftReset(ScrnInfoPtr pScrn)
 /*
  * I128CountRAM --
  *
- * Counts amount of installed RAM 
+ * Counts amount of installed RAM
  */
 static int
 I128CountRam(ScrnInfoPtr pScrn)
@@ -1256,7 +1256,7 @@ I128MapMem(ScrnInfoPtr pScrn)
 
     /*
      * Map IO registers to virtual address space
-     */ 
+     */
 #ifndef XSERVER_LIBPCIACCESS
     pI128->mem.mw0_ad = (unsigned char *)xf86MapPciMem(pScrn->scrnIndex,
 				VIDMEM_FRAMEBUFFER,
@@ -1328,7 +1328,7 @@ I128UnmapMem(ScrnInfoPtr pScrn)
 
     /*
      * Unmap IO registers to virtual address space
-     */ 
+     */
 #ifndef XSERVER_LIBPCIACCESS
     xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pI128->mem.mw0_ad,
 	pI128->MemorySize*1024);
@@ -1372,7 +1372,7 @@ I128Save(ScrnInfoPtr pScrn)
 /*
  * Restore the initial (text) mode.
  */
-static void 
+static void
 I128Restore(ScrnInfoPtr pScrn)
 {
     I128Ptr pI128 = I128PTR(pScrn);
@@ -1434,7 +1434,7 @@ I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
     unsigned char *FBStart;
     int width, height, displayWidth;
 
-    /* 
+    /*
      * First get the ScrnInfoRec
      */
     pScrn = xf86ScreenToScrn(pScreen);
@@ -1540,17 +1540,17 @@ I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
         xf86DrvMsg(pScrn->scrnIndex, X_ERROR, "Acceleration setup failed\n");
         return FALSE;
     }
-    
+
     xf86SetBackingStore(pScreen);
     xf86SetSilkenMouse(pScreen);
 
-    /* Initialize software cursor.  
+    /* Initialize software cursor.
 	Must precede creation of the default colormap */
     miDCInitialize(pScreen, xf86GetPointerScreenFuncs());
 
-    /* Initialize HW cursor layer. 
+    /* Initialize HW cursor layer.
 	Must follow software cursor initialization*/
-    if (pI128->HWCursor) { 
+    if (pI128->HWCursor) {
 	ret = TRUE;
     	switch(pI128->RamdacType) {
 	       case TI3025_DAC:
@@ -1565,7 +1565,7 @@ I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
 		  break;
 	    }
 	if(!ret)
-	    xf86DrvMsg(pScrn->scrnIndex, X_ERROR, 
+	    xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
 		"Hardware cursor initialization failed\n");
     }
 
@@ -1573,11 +1573,11 @@ I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
     if (!miCreateDefColormap(pScreen))
 	return FALSE;
 
-    /* Initialize colormap layer.  
+    /* Initialize colormap layer.
 	Must follow initialization of the default colormap */
-    if(!xf86HandleColormaps(pScreen, 256, 8, 
+    if(!xf86HandleColormaps(pScreen, 256, 8,
 	I128LoadPalette, NULL,
-	CMAP_PALETTED_TRUECOLOR | CMAP_RELOAD_ON_MODE_SWITCH))	
+	CMAP_PALETTED_TRUECOLOR | CMAP_RELOAD_ON_MODE_SWITCH))
 	return FALSE;
 
     xf86DPMSInit(pScreen, I128DisplayPowerManagementSet, 0);
@@ -1708,7 +1708,7 @@ I128FreeScreen(ScrnInfoPtr pScrn)
      */
     if (xf86LoaderCheckSymbol("vgaHWFreeHWRec"))
 	vgaHWFreeHWRec(pScrn);
-    
+
     I128FreeRec(pScrn);
 }
 
@@ -1724,8 +1724,8 @@ I128ValidMode(ScrnInfoPtr pScrn, DisplayModePtr mode, Bool verbose, int flags)
     lace = 1 + ((mode->Flags & V_INTERLACE) != 0);
 
     if ((mode->CrtcHDisplay <= 2048) &&
-	(mode->CrtcHSyncStart <= 4096) && 
-	(mode->CrtcHSyncEnd <= 4096) && 
+	(mode->CrtcHSyncStart <= 4096) &&
+	(mode->CrtcHSyncEnd <= 4096) &&
 	(mode->CrtcHTotal <= 4096) &&
 	(mode->CrtcVDisplay <= 2048 * lace) &&
 	(mode->CrtcVSyncStart <= 4096 * lace) &&
@@ -1837,11 +1837,11 @@ I128I2CGetBits(I2CBusPtr b, int *clock, int *data)
     lastdata = *data;
   }
 #endif
-}   
+}
 
 static void
 I128I2CPutBits(I2CBusPtr b, int clock, int data)
-{   
+{
   I128Ptr pI128 = I128PTR(xf86Screens[b->scrnIndex]);
   unsigned char drv, val;
   unsigned long ddc;
@@ -1860,25 +1860,25 @@ I128I2CPutBits(I2CBusPtr b, int clock, int data)
   if (pI128->Debug)
     xf86DrvMsg(b->scrnIndex, X_INFO, "i2c> 0x%x\n", tmp);
 #endif
-}   
+}
 
 
-static Bool    
+static Bool
 I128I2CInit(ScrnInfoPtr pScrn)
-{       
+{
     I128Ptr pI128 = I128PTR(pScrn);
     I2CBusPtr I2CPtr;
     unsigned long iobase;
     unsigned long soft_sw, ddc;
-     
+
     I2CPtr = xf86CreateI2CBusRec();
     if(!I2CPtr) return FALSE;
- 
+
     pI128->I2C = I2CPtr;
- 
+
     I2CPtr->BusName    = "DDC";
-    I2CPtr->scrnIndex  = pScrn->scrnIndex; 
-    I2CPtr->I2CPutBits = I128I2CPutBits; 
+    I2CPtr->scrnIndex  = pScrn->scrnIndex;
+    I2CPtr->I2CPutBits = I128I2CPutBits;
     I2CPtr->I2CGetBits = I128I2CGetBits;
     I2CPtr->BitTimeout = 4;
     I2CPtr->ByteTimeout = 4;
@@ -1904,7 +1904,7 @@ I128I2CInit(ScrnInfoPtr pScrn)
         return FALSE;
     }
     return TRUE;
-} 
+}
 
 
 static xf86MonPtr
@@ -2204,12 +2204,12 @@ I128DumpActiveRegisters(ScrnInfoPtr pScrn)
     	vrbg[0x58/4]&1UL, (vrbg[0x58/4]>>1)&1UL, (vrbg[0x58/4]>>2)&1UL,
     	(vrbg[0x58/4]>>3)&1UL, (vrbg[0x58/4]>>4)&1UL, (vrbg[0x58/4]>>5)&1UL,
     	(vrbg[0x58/4]>>6)&1UL, (vrbg[0x58/4]>>8)&1UL);
-    
+
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "  CRT_2CON 0x%08lx  MEM %ld  RFR %ld  TRD %ld  SPL %ld\n",
         (unsigned long)vrbg[0x5C/4],
     	vrbg[0x5C/4]&7UL, (vrbg[0x5C/4]>>8)&1UL,
     	(vrbg[0x5C/4]>>16)&7UL, (vrbg[0x5C/4]>>24)&1UL);
-    
+
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "Memory Windows Registers\n");
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "  MW0_CTRL 0x%08lx\n",
 	(unsigned long)vrbw[0x00]);
@@ -2245,7 +2245,7 @@ I128DumpActiveRegisters(ScrnInfoPtr pScrn)
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "  MW1_WKEY  0x%08lx  MW1_KYDAT 0x%08lx  MW1_MASK  0x%08lx\n",
     	(unsigned long)vrbw[0x44/4], vrbw[0x48/4]&0x000F000FUL,
 	(unsigned long)vrbw[0x4C/4]);
-    
+
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "Engine A Registers\n");
     xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "  INTP      0x%08lx\n",
 	vrba[0x00/4]&0x03UL);

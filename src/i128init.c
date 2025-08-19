@@ -1,7 +1,7 @@
 /*
  * Copyright 1995-2000 by Robin Cutshaw <robin@XFree86.Org>
  * Copyright 1998 by Number Nine Visual Technology, Inc.
- * 
+ *
  * Permission to use, copy, modify, distribute, and sell this software and its
  * documentation for any purpose is hereby granted without fee, provided that
  * the above copyright notice appear in all copies and that both that
@@ -547,7 +547,7 @@ I128SavePalette(I128Ptr pI128)
    	}
 	pI128->LUTSaved = TRUE;
    }
-      
+
 }
 
 
