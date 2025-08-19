@@ -92,7 +92,7 @@ typedef struct {
     CARD32              acntrl;
     struct source_format *source;
     /* struct dest_format *dest; */
-    
+
     Bool		NoAccel;
     Bool                exa;
     Bool		FlatPanel;
@@ -167,5 +167,5 @@ Bool I128ProgramSilverHammer(ScrnInfoPtr pScrn, DisplayModePtr mode);
 /* void I128DumpBaseRegisters(ScrnInfoPtr pScrn); */
 void I128DumpActiveRegisters(ScrnInfoPtr pScrn);
 /* void I128DumpIBMDACRegisters(ScrnInfoPtr pScrn, volatile CARD32 *vrbg); */
- 
+
 #endif

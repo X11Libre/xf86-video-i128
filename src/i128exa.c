@@ -234,7 +234,7 @@ i128SetBlitDirection(I128Ptr pI128, int dx, int dy)
     int blitdir;
 
     I128_EXA_DEBUG(("SetBlitDirection: %d %d\n", dx, dy));
-    
+
     if (dx < 0) {
         if (dy < 0) blitdir = DIR_RL_BT;
         else blitdir = DIR_RL_TB;
@@ -275,9 +275,9 @@ i128SetDestPixmap(I128Ptr pI128, PixmapPtr dst)
 {
     unsigned int dorg = exaGetPixmapOffset(dst);
     unsigned int dptch = exaGetPixmapPitch(dst);
-    
+
     I128_EXA_DEBUG(("SetDestPixmap: %x, %d\n", dorg, dptch));
-    
+
     CACHED_UPDATE(dorg, DE_DORG);
     CACHED_UPDATE(dptch, DE_DPTCH);
 }
@@ -359,7 +359,7 @@ i128PrepareSolid(PixmapPtr pPixmap, int alu, Pixel planemask, Pixel fg)
 
     /* no need to set the source, the chip ignores it */
     i128SetDestPixmap(pI128, pPixmap);
-    
+
     return TRUE;
 }
 
@@ -388,7 +388,7 @@ i128PrepareCopy(PixmapPtr pSrcPixmap, PixmapPtr pDstPixmap, int dx, int dy,
 
     i128SetSourcePixmap(pI128, pSrcPixmap);
     i128SetDestPixmap(pI128, pDstPixmap);
-    
+
     return TRUE;
 }
 
@@ -517,11 +517,11 @@ i128PrepareComposite(int op, PicturePtr pSrcPicture, PicturePtr pMaskPicture,
 
     /* 3D setup */
     i128SetTexture(pI128, pSrc);
-    
+
     i128SetAlphaForOp(pI128, op, 1);
 
     /* it looks pointless to cache these, but we'll need it for DRI */
-    
+
     tex_ctl |= TEX_TM;  /* enable texture mapping */
     tex_ctl |= TEX_NMG | TEX_NMN;   /* nearest interpolation */
     tex_ctl |= 0; /* TEX_RM;  / * modulate RGB */
@@ -532,7 +532,7 @@ i128PrepareComposite(int op, PicturePtr pSrcPicture, PicturePtr pMaskPicture,
     threedctl |= TCTL_TBS;  /* enable texture blend */
     threedctl |= TCTL_RT;   /* draw textured rectangle */
     CACHED_UPDATE(threedctl, THREEDCTL);
-     
+
     return TRUE;
 }
 
@@ -673,7 +673,7 @@ I128ExaInit(ScreenPtr pScreen)
 
     /* need this as a float * for vertex setup */
     pI128->mem.rbase_af = (float *)pI128->mem.rbase_a;
-    
+
     if (pI128->Debug) {
         xf86DrvMsg(pScrn->scrnIndex, X_INFO, "I128ExaInit done\n");
         I128DumpActiveRegisters(pScrn);
