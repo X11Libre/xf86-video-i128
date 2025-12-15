@@ -1818,7 +1818,7 @@ I128I2CInit(ScrnInfoPtr pScrn)
 
     pI128->I2C = I2CPtr;
 
-    I2CPtr->BusName    = "DDC";
+    I2CPtr->BusName    = strdup("DDC");
     I2CPtr->scrnIndex  = pScrn->scrnIndex;
     I2CPtr->I2CPutBits = I128I2CPutBits;
     I2CPtr->I2CGetBits = I128I2CGetBits;
