@@ -41,10 +41,6 @@ struct source_format {
 typedef struct {
     EntityInfoPtr	pEnt;
     pciVideoPtr		PciInfo;
-#ifndef XSERVER_LIBPCIACCESS
-    PCITAG		PciTag;
-    xf86AccessRec	Access;
-#endif
     int			Chipset;
     int                 ChipRev;
     Bool		Primary;
