@@ -2,7 +2,7 @@
 .ds q \N'34'
 .TH I128 __drivermansuffix__ 2009-01-09 __vendorversion__
 .SH NAME
-i128 \- Number 9 I128 Xorg video driver
+i128 \- Number 9 I128 XLibre video driver
 .SH SYNOPSIS
 .nf
 .B "Section \*qDevice\*q"
@@ -13,7 +13,7 @@ i128 \- Number 9 I128 Xorg video driver
 .fi
 .SH DESCRIPTION
 .B i128
-is an Xorg driver for Number 9 I128 video cards.
+is an XLibre driver for Number 9 I128 video cards.
 The driver is accelerated and provides support for all versions of the
 I128 chip family, including the SGI flatpanel configuration.
 Multi-head configurations are supported.
@@ -67,7 +67,7 @@ Default: false.
 This turns on verbose debug information from the driver.
 Default: off.
 .SH "SEE ALSO"
-.BR Xorg (1),
+.BR XLibre (1),
 .BR xorg.conf (__filemansuffix__),
 .BR Xserver (1),
 .BR X (__miscmansuffix__)
