@@ -22,10 +22,7 @@
  */
 
 /* Solid and Copy support derived from the i128 XAA code */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include "exa.h"
 #include "miline.h"
