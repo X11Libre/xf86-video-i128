@@ -121,8 +121,6 @@ _X_EXPORT DriverRec I128 = {
     0
 };
 
-#ifdef XFree86LOADER
-
 static MODULESETUPPROTO(i128Setup);
 
 static XF86ModuleVersionInfo i128VersRec =
@@ -148,10 +146,6 @@ static XF86ModuleVersionInfo i128VersRec =
  */
 
 _X_EXPORT XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
-
-#endif
-
-#ifdef XFree86LOADER
 
 /* Mandatory
  *
@@ -196,9 +190,6 @@ i128Setup(pointer module, pointer opts, int *errmaj, int *errmin)
 	return NULL;
     }
 }
-
-#endif /* XFree86LOADER */
-
 
 /* Define supported chipsets.  Used by Probe(). */
 
