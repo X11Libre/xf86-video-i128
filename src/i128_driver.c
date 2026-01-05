@@ -155,8 +155,8 @@ _X_EXPORT XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
  * This is only called once, not called with each server generation.
  *
  * Arguments:
- *		pointer module - module being loaded, passed to xf86AddDriver()
- *		pointer opts   - unused but contains options from config file
+ *		void *module - module being loaded, passed to xf86AddDriver()
+ *		void *opts   - unused but contains options from config file
  *		int *errmaj    - if function error returns major error value
  *		int *errmin    - if function error returns minor error value
  * Returns:
@@ -165,7 +165,7 @@ _X_EXPORT XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
  */
 
 static pointer
-i128Setup(pointer module, pointer opts, int *errmaj, int *errmin)
+i128Setup(void *module, void *opts, int *errmaj, int *errmin)
 {
     static Bool setupDone = FALSE;
 
@@ -184,7 +184,7 @@ i128Setup(pointer module, pointer opts, int *errmaj, int *errmin)
 	 * The return value must be non-NULL on success even though there
 	 * is no TearDownProc.
 	 */
-	return (pointer)1;
+	return (void*)1;
     } else {
 	if (errmaj) *errmaj = LDR_ONCEONLY;
 	return NULL;
@@ -1023,7 +1023,7 @@ I128PreInit(ScrnInfoPtr pScrn, int flags)
         pI128->displayOffset = 0;
 
     pI128->MemoryPtr =
-	    (pointer)&((char *)pI128->MemoryPtr)[pI128->displayOffset];
+	    (void*)&((char *)pI128->MemoryPtr)[pI128->displayOffset];
 
     /* Set the current mode to the first in the list */
     pScrn->currentMode = pScrn->modes;
@@ -1377,7 +1377,7 @@ I128ScreenInit(ScreenPtr pScreen, int argc, char **argv)
         return FALSE;
 
     pI128->MemoryPtr =
-	    (pointer)&((char *)pI128->MemoryPtr)[pI128->displayOffset];
+	    (void*)&((char *)pI128->MemoryPtr)[pI128->displayOffset];
 
     /* Save the current state */
     I128Save(pScrn);
