@@ -102,6 +102,7 @@ static unsigned int I128DDC1Read(ScrnInfoPtr pScrn);
 #define I128_MAJOR_VERSION PACKAGE_VERSION_MAJOR
 #define I128_MINOR_VERSION PACKAGE_VERSION_MINOR
 #define I128_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
+#define I128_VERSION_SUFFIX PACKAGE_VERSION_SUFFIX
 
 /*
  * This contains the functions needed by the server after loading the
@@ -146,6 +147,10 @@ static XF86ModuleVersionInfo i128VersRec =
  */
 
 _X_EXPORT XF86ModuleData i128ModuleData = { &i128VersRec, i128Setup, NULL };
+
+#ifdef XF86_MODULE_VERSION_SUFFIX
+XF86_MODULE_VERSION_SUFFIX(i128, I128_VERSION_SUFFIX);
+#endif
 
 /* Mandatory
  *
