@@ -1216,6 +1216,7 @@ I128MapMem(ScrnInfoPtr pScrn)
     /*
      * Map IO registers to virtual address space
      */
+    {
 	void** result = (void**)&pI128->mem.mw0_ad;
 	int err = pci_device_map_range(pI128->PciInfo,
 				       PCI_REGION_BASE(pI128->PciInfo, 0, REGION_MEM) & 0xffc00000,
@@ -1225,6 +1226,7 @@ I128MapMem(ScrnInfoPtr pScrn)
 				       result);
 	if (err)
 	    return FALSE;
+    }
 
     if (pI128->mem.mw0_ad == NULL)
 	return FALSE;
